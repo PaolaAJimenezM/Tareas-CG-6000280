@@ -16,8 +16,8 @@ html, body { margin: 0; padding: 0; overflow: hidden; }
   </head>
   <body>
 <div id="info">Quiz Tranformaciones Triángulo<br/>
-            El Triangulo morado es en Three.js.<br/>
-            El triángulo Rosado fue el que hice a mano<br/>
+            El Triangulo morado es en Three.js. Si se traslada al origen, se escala en X, se trasladar a SU origen, se vuelve a trasladar en Z y se rota en Y<br/>
+            El triángulo Rosado fue el que hice a mano si despues de trasladarlo al origen, se escala en X, trasalada en Z y rota en Y<br/>
         </div>
 
     <script src="js/three.min.js"></script>
@@ -73,15 +73,17 @@ html, body { margin: 0; padding: 0; overflow: hidden; }
 			//CREAR LAS GEOMETRIAS            			
             var geometry = new THREE.Geometry();
             
-	  /*geometry.vertices.push(new THREE.Vector3( -7.5, -1, -3.4) ); //PUNTO 1
+			//PUNTOS HECHO A MANO. 
+	    geometry.vertices.push(new THREE.Vector3( -7.5, -1, -3.4) ); //PUNTO 1
             geometry.vertices.push(new THREE.Vector3( 16.1, -1, -2) );   //PUNTO 2
             geometry.vertices.push(new THREE.Vector3( -7.5, 2, -3.4) );  //PUNTO 3
-            geometry.vertices.push(new THREE.Vector3( -7.5, -1, -3.4) ); //UNE EL ULTIMO PUNTO CON EL PRIMER PUNTO*/
+            geometry.vertices.push(new THREE.Vector3( -7.5, -1, -3.4) ); //UNE EL ULTIMO PUNTO CON EL PRIMER PUNTO
             
-            geometry.vertices.push(new THREE.Vector3( -5.6, 1, 3) ); //PUNTO 1
+           //VERIFICAR QUE LO QUE HICE A MANO ME DIO IGUAL QUE EN THREE.JS
+	    /*geometry.vertices.push(new THREE.Vector3( -5.6, 1, 3) ); //PUNTO 1
             geometry.vertices.push(new THREE.Vector3( 18, 1, -1.2) );   //PUNTO 2
             geometry.vertices.push(new THREE.Vector3( -5.6, 4, 3) );  //PUNTO 3
-            geometry.vertices.push(new THREE.Vector3( -5.6, 4, 3) ); //UNE EL ULTIMO PUNTO CON EL PRIMER PUNTO
+            geometry.vertices.push(new THREE.Vector3( -5.6, 4, 3) ); //UNE EL ULTIMO PUNTO CON EL PRIMER PUNTO*/
 
             var geometry2 = new THREE.Geometry();
             geometry2.vertices.push(xy1);
