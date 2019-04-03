@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Escena 1: Up una Avetura de Altura</title>
+        <style>
+            html, body { margin: 0; padding: 0; overflow: hidden; }
+            #info {
+                position: absolute;
+                padding: 10px;
+                width: 100%;
+                text-align: center;                              
+                color: #FFFFFF;
+            }
+        </style>
+    </head>
+    <body>
+       <div id="info"><br/>
+         <br/>
+         <br/>
+        </div>
+    <script src="js/three.min.js"></script>
+    <script>
+	var scene, aspect, camera, renderer;
+		var geometry1, geometry2;
+		var hips, torso, head;
+		var rightFoot, rightLeg, rightArm, rightHand;
+		var leftFoot, leftLeg, leftArm, leftHand;
+		var startTime = Date.now();
+
+                                                                                   //Paola Andrea Jiménez Mayor. 6000280
+			scene = new THREE.Scene();
+			aspect = window.innerWidth / window.innerHeight;
+			camera = new THREE.PerspectiveCamera( 45, aspect, 0.1, 1000);
+			renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+			
+								  
+			var size = 10;
+			var arrowSize = 1;
+			var divisions = size;
+			var origin = new THREE.Vector3( 0, 0, 0 );
+			var x = new THREE.Vector3( 1, 0, 0 );
+			var y = new THREE.Vector3( 0, 1, 0 );
+		  	var z = new THREE.Vector3( 0, 0, 1 );
+			var color1 = new THREE.Color( 0xFFFFFF );
+		  	var color2 = new THREE.Color( 0x333333 );
+		  	var colorR = new THREE.Color( 0xAA0000 );
+		  	var colorG = new THREE.Color( 0x00AA00 );
+		  	var colorB = new THREE.Color( 0x0000AA );
+			var colorRd = new THREE.Color( 0xAA6666 );
+		  	var colorGd = new THREE.Color( 0x66AA66 );
+		  	var colorBd = new THREE.Color( 0x6666AA );
+        
+		  
+            //CREAR LAS FLECHAS QUE INDICAN LOS EJES DE COORDENADAS 3D
+            var arrowX = new THREE.ArrowHelper( x, origin, arrowSize, colorR );
+            var arrowY = new THREE.ArrowHelper( y, origin, arrowSize, colorG );
+            var arrowZ = new THREE.ArrowHelper( z, origin, arrowSize, colorB );
+			
+			
+        //CREAR LOS MATERIALES
+        var material  = new THREE.MeshBasicMaterial( {color: 0xF4D564});
+        var material2 = new THREE.MeshBasicMaterial ({color: 0x5E3123});
+        var material3 = new THREE.MeshBasicMaterial ({color: 0xBA7144});
+        var material4 = new THREE.MeshBasicMaterial ({color: 0x09BCFF});
+        var material5 = new THREE.MeshBasicMaterial ({color: 0x47CD2C});
+           
+        //CREA LOS OBJETOS       
+        var cubo= new THREE.BoxGeometry( 25, 25, 25 );
+        var casa = new THREE.Mesh( cubo, material );
+        casa.position.y=-15;
+        scene.add( casa );
+        
+        var cubo1= new THREE.BoxGeometry( 15, 5, 35 );
+        var techoPr = new THREE.Mesh( cubo1, material2 );
+        techoPr.position.y=1;
+        techoPr.position.x=-4.2;
+        scene.add( techoPr );
+        
+        var cubo2= new THREE.BoxGeometry( 5, 25, 5 );
+        var chimenea = new THREE.Mesh( cubo2, material3 );
+        chimenea.position.y=1;
+        chimenea.position.x=0;
+        chimenea.position.z=1; 
+        scene.add( chimenea );
+         
+        var piramide = new THREE.ConeBufferGeometry(20, 20, 3);
+        var techoG = new THREE.Mesh (piramide, material2);
+        techoG.position.y=7.3;
+        techoG.position.z=-10;
+        techoG.position.x=2.8;
+        techoG.rotation.y=4.7;
+        scene.add(techoG);
+        
+        var piramide1 = new THREE.ConeBufferGeometry(20, 15, 3);
+        var techoP = new THREE.Mesh (piramide1, material2);
+        techoP.position.y=5;
+        techoP.position.z=10;
+        techoP.position.x=2.8;
+        techoP.rotation.y=4.7;
+        scene.add(techoP);
+
+        //GLOBOS AZULES
+	    var circulo = new THREE.SphereGeometry( 4, 32, 32 );
+        var globoa = new THREE.Mesh( circulo, material4);
+        globoa.position.y=35;
+        scene.add( globoa );
+        
+        var circulo1 = new THREE.SphereGeometry( 4, 32, 32 );
+        var globoa1 = new THREE.Mesh( circulo, material4);
+        globoa1.position.y=25;
+        globoa1.position.z=-10;
+        scene.add( globoa1 );
+        
+        var circulo3 = new THREE.SphereGeometry( 4, 32, 32 );
+        var globoa2 = new THREE.Mesh( circulo3, material4);
+        globoa2.position.y=25;
+        globoa2.position.z=-30;
+        scene.add( globoa2 );
+        
+        var circulo4 = new THREE.SphereGeometry( 4, 32, 32 );
+        var globoa3 = new THREE.Mesh( circulo4, material4);
+        globoa3.position.y=25;
+        globoa3.position.z=30;
+        scene.add( globoa3 );
+        
+        var circulo5 = new THREE.SphereGeometry( 4, 32, 32 );
+        var globoa4 = new THREE.Mesh( circulo5, material4);
+        globoa4.position.y=25;
+       // globoa4.position.z=30;
+        globoa4.position.x=30;
+        scene.add( globoa4 );
+        
+        //GLOBOS VERDES
+        var circulo6 = new THREE.SphereGeometry( 4, 32, 32 );
+        var globov = new THREE.Mesh( circulo6, material5);
+        globov.position.X=35;
+        globov.position.Y=40;
+        globov.position.z=-10;
+        scene.add( globov );
+        
+        var circulo7 = new THREE.SphereGeometry( 4, 32, 32 );
+        var globov1 = new THREE.Mesh( circulo7, material5);
+        globov1.position.y=12;
+        globov1.position.z=28;
+        scene.add( globov1 );
+        
+        var circulo8 = new THREE.SphereGeometry( 4, 32, 32 );
+        var globov2 = new THREE.Mesh( circulo8, material5);
+        globov2.position.y=25;
+        globov2.position.Z=-30;
+        scene.add( globov2 );
+        
+        var circulo9 = new THREE.SphereGeometry( 4, 32, 32 );
+        var globov3 = new THREE.Mesh( circulo9, material5);
+        globov3.position.y=40;
+        globov3.position.z=20;
+        scene.add( globov3 );
+        
+        var circulo10 = new THREE.SphereGeometry( 4, 32, 32 );
+        var globov4 = new THREE.Mesh( circulo10, material5);
+        globov4.position.y=25;
+       // globoa4.position.z=30;
+        globov4.position.x=-15;
+        scene.add( globov4 );
+        
+        
+        
+        
+		  	scene.add( arrowX );	
+		  	scene.add( arrowY );	
+		  	scene.add( arrowZ );	
+			
+			camera.position.x =100
+			camera.position.y =80;	 
+		  	camera.position.z =0;			
+		  	camera.lookAt( origin );
+			
+					
+	
+	render();
+			
+		    function animate() {
+        render();
+		controls.update(); // required if controls.enableDamping = true, or if controls.autoRotate = true
+        requestAnimationFrame( animate );
+    }
+    
+    function render(){
+        camera.lookAt( 0, 0, 0 );
+        renderer.render( scene, camera );
+    }	
+			
+    
+   
+	
+	</script>
+  </body>
+</html>
