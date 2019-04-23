@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Proyecto Up: Una Avetura de Altura</title>
+    <style>
+      html, body { margin: 0; padding: 0; overflow: hidden; }
+    </style>
+  </head>
+  <body>
+    <script src="js/three.js"></script>
+	<script src="js/controls/OrbitControls.js"></script>
+	<script src="js/csg.js"></script>
+	<script src="js/THREE.CSG.js"></script>
+    <script>
+		var scene, aspect, camera, renderer, controls;
+    var casa;
+    var contFrames=0;
+    var camarasOn=true;
+		init();
+		animate();
+		function init(){
+			//INICIALIZACIÓN
+	        scene = new THREE.Scene();
+	        aspect = window.innerWidth / window.innerHeight;
+	        camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000);
+	        renderer = new THREE.WebGLRenderer();
+	        renderer.setSize( window.innerWidth, window.innerHeight );
+	        document.body.appendChild( renderer.domElement );
+			controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+
+
+
+			//ELEMENTOS COMUNES
+			var size = 180;
+			var arrowSize = 1;
+			var divisions = size;
+			var origin = new THREE.Vector3( 0, 0, 0 );
+			var x = new THREE.Vector3( 1, 0, 0 );
+			var y = new THREE.Vector3( 0, 1, 0 );
+		  	var z = new THREE.Vector3( 0, 0, 1 );
+		  	var color = new THREE.Color( 0x333333 );
+		  	var colorR = new THREE.Color( 0xAA3333 );
+		  	var colorG = new THREE.Color( 0x33AA33 );
+		  	var colorB = new THREE.Color( 0x333366 );
+
+		  	//CREAR LAS GRILLAS PARA EL ESCENARIO
+		  	var axesHelper = new THREE.AxesHelper( size );
+			scene.add( axesHelper );
+
+		  	var gridHelperXZ = new THREE.GridHelper( size, divisions, color, color );
+			scene.add( gridHelperXZ );
+
+            //ROTARLAS PARA QUE QUEDEN EN EL ESPACIO ADECUADO
+            gridHelperXZ.rotateOnWorldAxis ( y, THREE.Math.degToRad(90) );
+
+
+
+			                                                                     //Trabajo de: Ana Gabriela Aguirre   Cód:6000
+                //CREAR LOS MATERIALES                                                         María Fernanda Medina  Cód:6000320
+        //Materiales de la Casa                                                                 Daniel Salazar        Cód:6000
+        var material  = new THREE.MeshBasicMaterial( {color: 0xF4D564});                      //Paola Andrea Jiménez  Cód:6000280
+        var material2 = new THREE.MeshBasicMaterial ({color: 0x5E3123});
+        var material3 = new THREE.MeshBasicMaterial ({color: 0xBA7144});
+        var material4 = new THREE.MeshBasicMaterial ({color: 0x09BCFF});
+        var material5 = new THREE.MeshBasicMaterial ({color: 0x47CD2C});
+
+        //Materiales de edificios
+        var material6 = new THREE.MeshBasicMaterial ({color: 0x524E82});
+        var material7 = new THREE.MeshBasicMaterial ({color: 0x4F264D});
+        var material8 = new THREE.MeshBasicMaterial ({color: 0x396A45});
+        var material9 = new THREE.MeshBasicMaterial ({color: 0x3B929C});
+        var material10 = new THREE.MeshBasicMaterial ({color: 0xD36141});
+        var material12 = new THREE.MeshBasicMaterial ({color: 0xFF9E50});
+
+
+        //Materiales de Calle
+        var material11 = new THREE.MeshBasicMaterial ({color: 0xD3B37C});
+        var material13 = new THREE.MeshBasicMaterial ({color: 0x33403B});
+
+
+
+            //CREAR LOS OBJETOS
+        var cubo= new THREE.BoxGeometry( 8, 8, 8 );
+        casa = new THREE.Mesh( cubo, material );
+        casa.position.x=-32;
+        casa.position.y=3;
+        casa.position.z=20;
+        scene.add(casa);
+
+
+        var cubo32= new THREE.BoxGeometry( 8, 2, 8);
+        var techoPr = new THREE.Mesh( cubo32, material2 );
+        //techoPr.position.x=-32;
+        techoPr.position.y=5;
+        //techoPr.position.z=20;
+        //scene.add(techoPr);
+
+
+        var cubo33= new THREE.BoxGeometry( 2, 8, 2 );
+        var chimenea = new THREE.Mesh( cubo33, material13 );
+        chimenea.position.y=5;
+        //chimenea.position.x=-32;
+        //chimenea.position.z=20;
+        //scene.add( chimenea );
+
+
+        var piramide = new THREE.ConeBufferGeometry(7, 7, 3);
+        var techoG = new THREE.Mesh (piramide, material2);
+        techoG.position.y=4;
+        techoG.position.z=-3;
+        techoG.position.x=1;
+        techoG.rotation.y=4.7;
+        //scene.add(techoG);
+
+
+        var piramide1 = new THREE.ConeBufferGeometry(6, 3, 3);
+        var techoP = new THREE.Mesh (piramide1, material2);
+        techoP.position.y=2;
+        techoP.position.z=3;
+        techoP.position.x=1.5;
+        techoP.rotation.y=4.7;
+        //scene.add(techoP);
+
+          casa.add(techoPr);
+          techoPr.add(chimenea);
+          techoPr.add(techoG);
+          techoPr.add(techoP);
+
+
+
+
+        var cubo3= new THREE.BoxGeometry( 6, 18, 15);  //,Ancho, Alto, largo
+        var edificio = new THREE.Mesh( cubo3, material6 );
+        edificio.position.x=-47;
+        edificio.position.y=9;
+        edificio.position.z=32;
+        scene.add( edificio );
+
+
+        var cubo4= new THREE.BoxGeometry( 6, 18, 6);  //,Ancho, Alto, largo
+        var edificio1 = new THREE.Mesh( cubo4, material7 );
+        edificio1.position.x=-47;
+        edificio1.position.y=9;
+        edificio1.position.z=21.5;
+        scene.add( edificio1 );
+
+
+        var cubo5= new THREE.BoxGeometry( 8, 18, 8);  //,Ancho, Alto, largo
+        var edificio2 = new THREE.Mesh( cubo5, material8 );
+        edificio2.position.x=-32;
+        edificio2.position.y=9;
+        edificio2.position.z=36;
+        scene.add( edificio2 );
+
+
+        var cubo6= new THREE.BoxGeometry( 8, 18, 8);  //,Ancho, Alto, largo
+        var edificio3 = new THREE.Mesh( cubo6, material9 );
+        edificio3.position.x=-32;
+        edificio3.position.y=9;
+        edificio3.position.z=44;
+        scene.add( edificio3 );
+
+
+        var cubo7= new THREE.BoxGeometry( 8, 18, 8);  //,Ancho, Alto, largo
+        var edificio4 = new THREE.Mesh( cubo7, material10 );
+        edificio4.position.x=-32;
+        edificio4.position.y=9;
+        edificio4.position.z=4;
+        scene.add( edificio4 );
+
+
+        var cubo8= new THREE.BoxGeometry( 8, 34, 16);  //,Ancho, Alto, largo
+        var edificio5 = new THREE.Mesh( cubo8, material6 );
+        edificio5.position.x=0;
+        edificio5.position.y=7;
+        edificio5.position.z=40;
+        scene.add( edificio5 );
+
+
+        var cubo8= new THREE.BoxGeometry( 8, 34, 16);  //,Ancho, Alto, largo
+        var edificio5 = new THREE.Mesh( cubo8, material10 );
+        edificio5.position.x=0;
+        edificio5.position.y=7;
+        edificio5.position.z=40;
+        scene.add( edificio5 );
+
+
+        var cubo9= new THREE.BoxGeometry( 10, 43, 16);  //,Ancho, Alto, largo
+        var edificio6 = new THREE.Mesh( cubo9, material6 );
+        edificio6.position.x=-1;
+        edificio6.position.y=18;
+        edificio6.position.z=24;
+        scene.add( edificio6 );
+
+        var cubo10= new THREE.BoxGeometry( 10, 36, 16);  //,Ancho, Alto, largo
+        var edificio7 = new THREE.Mesh( cubo10, material8 );
+        edificio7.position.x=-1;
+        edificio7.position.y=7;
+        edificio7.position.z=8;
+        scene.add( edificio7 );
+
+
+        var cubo12= new THREE.BoxGeometry( 16, 22, 10);  //,Ancho, Alto, largo
+        var edificio8 = new THREE.Mesh( cubo12, material9 );
+        edificio8.position.x=-36;
+        edificio8.position.y=11;
+        edificio8.position.z=-25;
+        scene.add( edificio8 );
+
+
+        var cubo13= new THREE.BoxGeometry( 16, 16, 10);  //,Ancho, Alto, largo
+        var edificio9 = new THREE.Mesh( cubo13, material7 );
+        edificio9.position.x=-20;
+        edificio9.position.y=8;
+        edificio9.position.z=-25;
+        scene.add( edificio9 );
+
+
+        var cubo14= new THREE.BoxGeometry( 16, 18, 10);  //,Ancho, Alto, largo
+        var edificio10 = new THREE.Mesh( cubo14, material12 );
+        edificio10.position.x=-4;
+        edificio10.position.y=9;
+        edificio10.position.z=-25;
+        scene.add( edificio10 );
+
+
+        var cubo15= new THREE.BoxGeometry( 20, 24, 10);  //,Ancho, Alto, largo
+        var edificio11 = new THREE.Mesh( cubo15, material10 );
+        edificio11.position.x=-6;
+        edificio11.position.y=12;
+        edificio11.position.z=-35;
+        scene.add( edificio11 );
+
+
+        var cubo17= new THREE.BoxGeometry( 12, 20, 10);  //,Ancho, Alto, largo
+        var edificio12 = new THREE.Mesh( cubo17, material12 );
+        edificio12.position.x=31;
+        edificio12.position.y=10;
+        edificio12.position.z=-35;
+        scene.add( edificio12 );
+
+
+        var cubo18= new THREE.BoxGeometry( 6, 12, 10);  //,Ancho, Alto, largo
+        var edificio13 = new THREE.Mesh( cubo18, material7 );
+        edificio13.position.x=28;
+        edificio13.position.y=6;
+        edificio13.position.z=-25;
+        scene.add( edificio13 );
+
+
+        var cubo19= new THREE.BoxGeometry( 12, 14, 10);  //,Ancho, Alto, largo
+        var edificio14 = new THREE.Mesh( cubo19, material8 );
+        edificio14.position.x=40;
+        edificio14.position.y=7;
+        edificio14.position.z=-25;
+        scene.add( edificio14 );
+
+
+        var cubo20= new THREE.BoxGeometry( 9, 18, 10);  //,Ancho, Alto, largo
+        var edificio15 = new THREE.Mesh( cubo20, material9 );
+        edificio15.position.x=41.5;
+        edificio15.position.y=9;
+        edificio15.position.z=-35;
+        scene.add( edificio15 );
+
+
+        var cubo23= new THREE.BoxGeometry( 10, 16, 10);  //,Ancho, Alto, largo
+        var edificio16 = new THREE.Mesh( cubo23, material9 );
+        edificio16.position.x=28;
+        edificio16.position.y=8;
+        edificio16.position.z=5;
+        scene.add( edificio16 );
+
+
+        var cubo24= new THREE.BoxGeometry( 13, 12, 10);  //,Ancho, Alto, largo
+        var edificio17 = new THREE.Mesh( cubo24, material6 );
+        edificio17.position.x=39.5;
+        edificio17.position.y=6;
+        edificio17.position.z=5;
+        scene.add( edificio17 );
+
+
+        var cubo25= new THREE.BoxGeometry( 13, 12, 10);  //,Ancho, Alto, largo
+        var edificio17 = new THREE.Mesh( cubo25, material6 );
+        edificio17.position.x=39.5;
+        edificio17.position.y=6;
+        edificio17.position.z=5;
+        scene.add( edificio17 );
+
+
+         var cubo25= new THREE.BoxGeometry( 8, 12, 8);  //,Ancho, Alto, largo
+        var edificio18 = new THREE.Mesh( cubo25, material12 );
+        edificio18.position.x=30;
+        edificio18.position.y=6;
+        edificio18.position.z=14;
+        scene.add( edificio18 );
+
+
+        var cubo26= new THREE.BoxGeometry( 12, 20, 8);  //,Ancho, Alto, largo
+        var edificio19 = new THREE.Mesh( cubo26, material8 );
+        edificio19.position.x=40;
+        edificio19.position.y=10;
+        edificio19.position.z=14;
+        scene.add( edificio19 );
+
+
+        var cubo27= new THREE.BoxGeometry( 12, 14, 8);  //,Ancho, Alto, largo
+        var edificio20 = new THREE.Mesh( cubo27, material10 );
+        edificio20.position.x=40;
+        edificio20.position.y=7;
+        edificio20.position.z=22;
+        scene.add( edificio20 );
+
+
+        var cubo29= new THREE.BoxGeometry( 23, 14, 22);  //,Ancho, Alto, largo
+        var edificio21 = new THREE.Mesh( cubo29, material7 );
+        edificio21.position.x=76;
+        edificio21.position.y=7;
+        edificio21.position.z=-30;
+        scene.add( edificio21 );
+
+
+
+
+        //Andenes
+        var cubo8= new THREE.BoxGeometry( 23.5, 2, 52);  //,Ancho, Alto, largo
+        var anden = new THREE.Mesh( cubo8, material11 );
+        anden.position.x=-38;
+        anden.position.y=-1;
+        anden.position.z=24;
+        scene.add( anden );
+
+
+        var cubo11= new THREE.BoxGeometry( 14.5, 2, 52);  //,Ancho, Alto, largo
+        var anden1 = new THREE.Mesh( cubo11, material11 );
+        anden1.position.x=-1;
+        anden1.position.y=-1;
+        anden1.position.z=24;
+        scene.add( anden1 );
+
+
+        var cubo16= new THREE.BoxGeometry( 52, 2, 23);  //,Ancho, Alto, largo
+        var anden2 = new THREE.Mesh( cubo16, material11 );
+        anden2.position.x=-20;
+        anden2.position.y=-1;
+        anden2.position.z=-30;
+        scene.add( anden2 );
+
+
+        var cubo21= new THREE.BoxGeometry( 25, 2, 24);  //,Ancho, Alto, largo
+        var anden3 = new THREE.Mesh( cubo21, material11 );
+        anden3.position.x=35;
+        anden3.position.y=-1;
+        anden3.position.z=-30;
+        scene.add( anden3 );
+
+
+        var cubo22= new THREE.BoxGeometry( 25, 2, 30);  //,Ancho, Alto, largo
+        var anden4 = new THREE.Mesh( cubo22, material11 );
+        anden4.position.x=35;
+        anden4.position.y=-1;
+        anden4.position.z=13;
+        scene.add( anden4 );
+
+
+        var cubo28= new THREE.BoxGeometry( 25, 2, 24);  //,Ancho, Alto, largo
+        var anden5 = new THREE.Mesh( cubo28, material11 );
+        anden5.position.x=76;
+        anden5.position.y=-1;
+        anden5.position.z=-30;
+        scene.add( anden5 );
+
+
+        var cubo30= new THREE.BoxGeometry( 25, 2, 30);  //,Ancho, Alto, largo
+        var anden6 = new THREE.Mesh( cubo30, material11 );
+        anden6.position.x=76;
+        anden6.position.y=-1;
+        anden6.position.z=13;
+        scene.add( anden6 );
+
+        var cubo31= new THREE.BoxGeometry( 140, 1, 100);  //,Ancho, Alto, largo
+        var calle = new THREE.Mesh( cubo31, material13 );
+        calle.position.x=20;
+        calle.position.y=-2;
+        scene.add( calle );
+
+
+        if (camarasOn==false){
+          camera.position.x = 30;
+    			camera.position.y = 30;
+    		  camera.position.z = 30;
+    			camera.lookAt( origin );
+        }
+
+
+
+		}
+
+
+var mov=0,mov2=0,mov3=0,mov4=0,mov5=0;
+var rotate=0;
+
+		function animate(){
+
+
+var a = new THREE.Vector3(-25.0, 17.0+mov, 20.0  );
+var b = new THREE.Vector3(-25.0, 14.0, 22.0  );
+var c = new THREE.Vector3(-280.0, 2.0, 22.0  );
+var d = new THREE.Vector3(-31.0, 2.0, -22.0  );
+var e = new THREE.Vector3(28.0, 15.0, 20.0  );
+var f = new THREE.Vector3(-40.0, 29.0, 22.0  );
+var g = new THREE.Vector3(-29.0, 0.0, 22.0  );
+var h = new THREE.Vector3(-29.0, 0.0, 18.0  );
+var i = new THREE.Vector3(-25.0, 5.0-mov2, 20.0  );
+var j = new THREE.Vector3(-25.0, 10.0, 20.0  );
+var k = new THREE.Vector3(28.0, -125.0, 20.0  );
+var l = new THREE.Vector3(-23.0+rotate, 5.0, -24.0 );
+var m = new THREE.Vector3(-33.0, 0.0, 20.0 );
+var n = new THREE.Vector3(10.0, 15.0+mov4, 20.0 );
+var o = new THREE.Vector3(-16.0, 16.0, -40.0 );
+var p = new THREE.Vector3(-15.0, 45.0, 20.0 );
+var q = new THREE.Vector3(11.0, 0.0, -5.0 );
+var r = new THREE.Vector3(100.0, 7.0, -25.0 );
+var s = new THREE.Vector3(100.0, 7.0, -27.0 +mov5*1.8);
+
+			requestAnimationFrame( animate );
+
+      contFrames++;
+
+      if(contFrames>=13*60 && contFrames<17*60){
+          casa.position.y+=0.02;
+      }
+
+      if(contFrames>=17*60 && contFrames<26*60){
+          casa.position.x+=0.025;
+      }
+
+      if(contFrames>=26*60 && contFrames<29*60){
+          casa.position.x+=0.023;
+          casa.position.y+=0.015;
+      }
+
+      if(contFrames>=29*60 && contFrames<44*60){
+          casa.position.x+=0.005;
+          casa.position.y+=0.032;
+      }
+
+      if(contFrames==45*60 ){
+          casa.position.x=-5;
+          casa.position.y=40;
+          casa.position.z=0;
+      }
+
+      if(contFrames>45*60 && contFrames<50*60){
+          casa.position.x+=0.18;
+          casa.position.z-=0.03;
+      }
+
+      if(contFrames==50*60 ){
+          casa.position.x=20;
+          casa.position.y=30;
+          casa.position.z=-25;
+      }
+
+      if(contFrames>50*60 && contFrames<=60*60){
+          casa.position.x+=0.18;
+          casa.position.z+=0.02;
+      }
+
+      if(camarasOn==true){
+
+        if(contFrames>=0*60 && contFrames <3*60){
+            camera.position.x = -20;
+            camera.position.y = 5+mov;
+            camera.position.z = 20;
+            camera.lookAt( a );
+            mov= mov+0.025;
+        }
+
+        if(contFrames>=3*60 && contFrames <6*60){
+            camera.position.x = -22;
+            camera.position.y = 13;
+            camera.position.z = 24;
+            camera.lookAt( b );
+        }
+
+        if(contFrames>=6*60 && contFrames <7*60){
+            camera.position.x = -26;
+            camera.position.y = 2;
+            camera.position.z = 22.5;
+            camera.lookAt( c );
+        }
+
+        if(contFrames>=7*60 && contFrames <8*60){
+            camera.position.x = -30;
+            camera.position.y = 2;
+            camera.position.z = 25;
+            camera.lookAt( d );
+        }
+
+        if(contFrames>=8*60 && contFrames <9*60){
+          camera.position.x = -26;
+          camera.position.y = 2;
+          camera.position.z = 20;
+          camera.lookAt( e );
+        }
+
+        if(contFrames>=9*60 && contFrames <10*60){
+          camera.position.x = -27;
+          camera.position.y = 4;
+          camera.position.z = 15;
+          camera.lookAt( f );
+        }
+
+        if(contFrames>=10*60 && contFrames <11*60){
+            camera.position.x = -27.5;
+            camera.position.y = 2;
+            camera.position.z = 24.5;
+            camera.lookAt( g );
+        }
+
+        if(contFrames>=11*60 && contFrames <12*60){
+            camera.position.x = -26;
+            camera.position.y = 2;
+            camera.position.z = 22;
+            camera.lookAt( h );
+        }
+
+        if(contFrames>=12*60 && contFrames <13*60){
+            camera.position.x = -30;
+            camera.position.y = 2;
+            camera.position.z = 25;
+            camera.lookAt( d );
+        }
+
+        if(contFrames>=13*60 && contFrames <17*60){
+          camera.position.x = -16+mov2;
+          camera.position.y = 3;
+          camera.position.z = 20;
+          camera.lookAt( i );
+          mov2-=0.017
+        }
+
+        if(contFrames>=17*60 && contFrames <18*60){
+          camera.position.x = -26;
+          camera.position.y = 2;
+          camera.position.z = 20;
+          camera.lookAt( e );
+        }
+
+        if(contFrames>=18*60 && contFrames <21*60){
+          camera.position.x = -22;
+          camera.position.y = 1;
+          camera.position.z = 20;
+          camera.lookAt( j );
+        }
+
+        if(contFrames>=21*60 && contFrames <21.5*60){
+          camera.position.x = -26;
+          camera.position.y = 6;
+          camera.position.z = 20;
+          camera.lookAt( k );
+        }
+
+        if(contFrames>=21.5*60 && contFrames <27*60){
+          camera.position.x = -18;
+          camera.position.y = 5;
+          camera.position.z = 28;
+          camera.lookAt( l );
+          rotate+=0.05;
+        }
+
+        if(contFrames>=27*60 && contFrames <28*60){
+          camera.position.x = -29+mov3;
+          camera.position.y = 8+mov3;
+          camera.position.z = 20;
+          camera.lookAt( m );
+          mov3+=0.05;
+        }
+
+        if(contFrames>=28*60 && contFrames <34*60){
+          camera.position.x = -20;
+          camera.position.y = 8+(mov4/2);
+          camera.position.z = 22;
+          camera.lookAt( n );
+          mov4+=0.04;
+        }
+
+        if(contFrames>=34*60 && contFrames <37*60){
+          camera.position.x = -16;
+          camera.position.y = 10;
+          camera.position.z = 70;
+          camera.lookAt( o );
+        }
+
+        if(contFrames>=37*60 && contFrames <44*60){
+          camera.position.x = 0;
+          camera.position.y = 45;
+          camera.position.z = 20;
+          camera.lookAt( p );
+        }
+
+        if(contFrames>=44*60 && contFrames <51*60){
+          camera.position.x = 5;
+          camera.position.y = 15;
+          camera.position.z = 0;
+          camera.lookAt( q );
+        }
+
+        if(contFrames>=51*60 && contFrames <55*60){
+          camera.position.x = 62;
+          camera.position.y = 3;
+          camera.position.z = -27;
+          camera.lookAt( r );
+        }
+        if(contFrames>=55*60 && contFrames <58*60){
+          camera.position.x = 62;
+          camera.position.y = 3;
+          camera.position.z = -25+mov5;
+          camera.lookAt(s);
+          mov5+=0.07;
+        }
+
+      }
+
+
+      console.log(contFrames);
+      if(camarasOn==false){
+          controls.update();
+      }
+
+			render();
+		}
+		function render(){
+			renderer.render( scene, camera );
+		}
+    </script>
+  </body>
+</html>
