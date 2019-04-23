@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Serpiente</title>
+        <style>
+            html, body { margin: 0; padding: 0; overflow: hidden; }
+            #info {
+                position: absolute;
+                padding: 10px;
+                width: 100%;
+                text-align: center;
+                color: #FFFFFF;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="info"><br/>
+            utilizar las flechas arriba, abajo, izquierda y derecha
+        </div>
+    <script src="js/three.min.js"></script>
+    <script>
+	var scene, aspect, camera, renderer;
+		var geometry1, geometry2;
+		var hips, torso, head;
+		var rightFoot, rightLeg, rightArm, rightHand;
+		var leftFoot, leftLeg, leftArm, leftHand;
+		var startTime = Date.now();
+		
+		
+		init();
+		animate();   //MUUY IMPORTANTE 
+	
+		function init(){
+			scene = new THREE.Scene();
+			aspect = window.innerWidth / window.innerHeight;
+			camera = new THREE.PerspectiveCamera( 45, aspect, 0.1, 1000);
+			renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+			
+			
+			var onKeyDown = function ( event ) {	
+			};	  
+		  			
+			var onKeyUp = function ( event ) {	
+			};	  	
+			document.addEventListener( 'keydown', onKeyDown, false );
+			document.addEventListener( 'keyup', onKeyUp, false );
+			
+		
+			var size = 10;
+			var arrowSize = 1;
+			var divisions = size;
+			var origin = new THREE.Vector3( 0, 0, 0 );
+			var x = new THREE.Vector3( 1, 0, 0 );
+			var y = new THREE.Vector3( 0, 1, 0 );
+		  	var z = new THREE.Vector3( 0, 0, 1 );
+			var color1 = new THREE.Color( 0xFFFFFF );
+		  	var color2 = new THREE.Color( 0x333333 );
+		  	var colorR = new THREE.Color( 0xAA3333 );
+		  	var colorG = new THREE.Color( 0x33AA33 );
+		  	var colorB = new THREE.Color( 0x333366 );
+		  
+		  	//CREAR LAS GRILLAS PARA EL ESCENARIO
+		  	var axesHelper = new THREE.AxesHelper( size );
+		  	var gridHelperXY = new THREE.GridHelper( size, divisions, color1, color1);
+		  	var gridHelperXZ = new THREE.GridHelper( size, divisions, color2, color2 );
+		  	var gridHelperYZ = new THREE.GridHelper( size, divisions, color2, color2 );
+            
+            //ROTARLAS PARA QUE QUEDEN EN EL ESPACIO ADECUADO
+            gridHelperXY.rotateOnWorldAxis ( x, THREE.Math.degToRad(90) );
+            gridHelperXZ.rotateOnWorldAxis ( y, THREE.Math.degToRad(90) );
+            gridHelperYZ.rotateOnWorldAxis ( z, THREE.Math.degToRad(90) );
+            
+            //CREAR LAS FLECHAS QUE INDICAN LOS EJES DE COORDENADAS 3D
+            var arrowX = new THREE.ArrowHelper( x, origin, arrowSize, colorR );
+            var arrowY = new THREE.ArrowHelper( y, origin, arrowSize, colorG );
+            var arrowZ = new THREE.ArrowHelper( z, origin, arrowSize, colorB );
+			
+			
+			//SE CREA LOS MATERIALES
+           var material= new THREE.MeshBasicMaterial({color:0x2AAED7}); 
+           var material2= new THREE.MeshBasicMaterial({color:0xCE0000}); 
+            var material3 = new THREE.MeshBasicMaterial( {color: 0xE5D135} ); 
+			var material4 = new THREE.MeshBasicMaterial( {color: 0xE84A32} );
+			var material5 = new THREE.MeshBasicMaterial( {color: 0xFF534F} );
+			
+			
+            
+            //CREAR LAS GEOMETRIAS
+           var geo1=new THREE.CylinderGeometry( 0.5,0.5, 1, 32 );
+		   var cabeza= new THREE.Mesh(geo1,material4);
+          //cabeza.rotation.x=5;
+          /*cabeza.rotation.z=0.3;
+            cabeza.rotation.y=1;
+			//cabeza.position.x=5;
+          cabeza.position.z=-0.3;
+          //  cabeza.position.y=1;*/
+			
+		   scene.add(cabeza);
+            
+           var geo2 = new THREE.BoxGeometry(0.8, 1.5, 0.8 );  //(ancho,largo,alto)
+           var cubo1 = new THREE.Mesh( geo2, material2 );
+           scene.add( cubo1 );
+           cubo1.rotation.x=2.8;
+		   cubo1.rotation.z=1.5;
+		   cubo1.position.x=0.5;
+		   cubo1.position.z=0;
+		   scene.add(cubo1);
+		   
+		   
+		   var geo3=new THREE.SphereGeometry(0.3,32,32);
+		   var esfe1=new THREE.Mesh(geo3,material5);
+		   esfe1.position.y=-0.8;
+		   scene.add(esfe1);
+		   
+		   var geo4 = new THREE.CylinderGeometry( 0.5,0.5, 1, 32 );     //y: adelante o atras. x:ixq y dere rotacion:-el final va hacia derecha
+           var cubo2 = new THREE.Mesh( geo4, material );
+		   cubo2.rotation.z=3.25;
+           cubo2.position.x=0.2;
+           cubo2.position.y=-0.7;
+           cubo2.position.z=0;
+		   scene.add(cubo2);
+		   
+			
+		   var geo5=new THREE.SphereGeometry(0.3,32,32);
+		   var esfe2=new THREE.Mesh(geo5,material5);
+		   esfe2.position.y=0.5;
+		   scene.add(esfe2);
+		   
+		   var geo6 = new THREE.BoxGeometry( 0.8, 1.5, 0.8 );
+           var cubo3 = new THREE.Mesh( geo6, material2 );
+		   cubo3.rotation.y=0;
+		   cubo3.position.x=0;
+			cubo3.position.y=1;
+		   scene.add(cubo3);
+		   
+           var geo7 = new THREE.CylinderGeometry( 0.1, 0.1, 0.6, 32 );
+           var cylinder = new THREE.Mesh( geo7, material3 );
+            cylinder.position.y=1;
+            cylinder.position.z=0;
+            cylinder.position.x=0.1;
+            cylinder.rotation.x=2;
+			cylinder.rotation.y=5;
+            cylinder.rotation.z=5;
+           scene.add( cylinder );
+            
+           /*var geo8 = new THREE.CylinderGeometry( 0.1, 0.1, 1, 32 );
+           var cylinder2 = new THREE.Mesh( geo8, material3 );
+            cylinder2.position.y=0.4;
+            cylinder2.position.z=-0.3;
+            cylinder2.position.x=0.1;
+            cylinder2.rotation.x=-0.5;
+            cylinder2.rotation.z=-10;
+           scene.add( cylinder2 );*/
+            
+            
+            
+		//el siguiente se pega al anterio
+		    cabeza.add(cubo1);
+			cubo1.add(esfe1);
+			esfe1.add(cubo2);
+			cubo2.add(esfe2);
+			esfe2.add(cubo3);
+            cabeza.add(cylinder);
+			//cabeza.add(cylinder2);
+            
+            scene.add( gridHelperXZ );
+		  	scene.add( arrowX );	
+		  	scene.add( arrowY );	
+		  	scene.add( arrowZ );	
+			
+			camera.position.x = 3;
+			camera.position.y = 5;	 
+		  	camera.position.z = 0;			
+		  	camera.lookAt( origin );
+			
+			
+            //TECLAS PARA MANEJARLO			
+		    document.addEventListener("keydown", keyboard, false);
+            document.addEventListener("keydown", onKeyDown, false);
+			function keyboard(event){
+            var speed=0.4;
+			var mov=0.2;
+			var aux;
+            if(event.keyCode==38){
+			
+               cabeza.position.x -=speed;
+			   cabeza.rotation.y=0.2;
+
+            } 
+			
+			if(event.keyCode==39){
+			cabeza.rotation.y=5.3;
+			cabeza.position.z -=speed;
+			}if(event.keyCode==37){
+			cabeza.rotation.y=-4.5;
+			cabeza.position.z +=speed;
+			}if(event.keyCode==40){
+			cabeza.position.x+=speed;
+			cabeza.rotation.y=10;
+			
+			}
+			render();
+			}
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+    function  animate(){
+        requestAnimationFrame(render);
+        
+        render();
+    }
+	
+	
+	function render(){
+	
+		renderer.clear();
+        renderer.render( scene, camera );
+    }
+	
+	
+			
+			
+			
+    
+   
+	
+	</script>
+  </body>
+</html>
