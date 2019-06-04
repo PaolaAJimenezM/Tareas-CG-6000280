@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geometría Constructiva de Sólidos: Ejercicio 9</title>
+    <style>
+      html, body { margin: 0; padding: 0; overflow: hidden; }
+    </style>
+  </head>                 
+  <body>
+    <script src="js/three.js"></script>
+	<script src="js/controls/OrbitControls.js"></script>
+	<script src="js/csg.js"></script>
+	<script src="js/THREE.CSG.js"></script>
+    <script>
+		var scene, aspect, camera, renderer, controls;
+		init();
+		animate();
+		function init(){
+			//INICIALIZACIÓN
+	        scene = new THREE.Scene();
+	        aspect = window.innerWidth / window.innerHeight;
+	        camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000);              //TRABAJO DE: Paola Andrea Jiménez Mayor
+	        renderer = new THREE.WebGLRenderer();                                      //6000280
+	        renderer.setSize( window.innerWidth, window.innerHeight );
+	        document.body.appendChild( renderer.domElement );
+			controls = new THREE.OrbitControls( camera, renderer.domElement );
+			
+			//ELEMENTOS COMUNES
+			var size = 100;
+			var arrowSize = 1;
+			var divisions = size;
+			var origin = new THREE.Vector3( 0, 0, 0 );
+			var x = new THREE.Vector3( 1, 0, 0 );
+			var y = new THREE.Vector3( 0, 1, 0 );
+		  	var z = new THREE.Vector3( 0, 0, 1 );
+		  	var color = new THREE.Color( 0x333333 );
+		  	var colorR = new THREE.Color( 0xAA3333 );
+		  	var colorG = new THREE.Color( 0x33AA33 );
+		  	var colorB = new THREE.Color( 0x333366 );
+			
+		  	//CREAR LAS GRILLAS PARA EL ESCENARIO
+		  	var axesHelper = new THREE.AxesHelper( size );
+			scene.add( axesHelper );
+			
+		  	var gridHelperXZ = new THREE.GridHelper( size, divisions, color, color );
+			scene.add( gridHelperXZ );
+            
+            //ROTARLAS PARA QUE QUEDEN EN EL ESPACIO ADECUADO
+            gridHelperXZ.rotateOnWorldAxis ( y, THREE.Math.degToRad(90) );
+
+            //CREAR ILUMINACIÓN
+            var ambient = new THREE.AmbientLight( 0xffffff, 2 );
+            scene.add( ambient );
+			
+            var pointLight = new THREE.PointLight( 0xffffff, 1, 100 );
+            pointLight.position.set( -5, 1, 5 );
+            scene.add( pointLight );
+			
+            var pointLight = new THREE.PointLight( 0xffffff, .5, 100 );
+            pointLight.position.set( 5, 1, -5 );
+            scene.add( pointLight );
+            
+            
+            
+            //CREAR LOS MATERIALES
+            var material1 = new THREE.MeshStandardMaterial( { color: 0x878EFF, metalness: 0.5, roughness: 0.1 } );
+			var material2 = new THREE.MeshStandardMaterial( { color: 0x65EBD6, metalness: 0.5, roughness: 0.1 } );
+            var material3 = new THREE.MeshStandardMaterial( { color: 0xCEFF7A, metalness: 0.5, roughness: 0.1 } );
+            var material4 = new THREE.MeshStandardMaterial( { color: 0x5DEB6B, metalness: 0.5, roughness: 0.1 } );
+            var material5 = new THREE.MeshStandardMaterial( { color: 0xF3A0FF, metalness: 0.5, roughness: 0.1 } );
+            var material6 = new THREE.MeshStandardMaterial( { color: 0xCA70FF, metalness: 0.5, roughness: 0.1 } );
+            var material7 = new THREE.MeshStandardMaterial( { color: 0xEB4E43, metalness: 0.5, roughness: 0.1 } );
+            var material8 = new THREE.MeshStandardMaterial( { color: 0xFFE079,  metalness: 0.5, roughness: 0.1 } );
+            var material9 = new THREE.MeshStandardMaterial( { color: 0xFFB370, metalness: 0.5, roughness: 0.1 } );
+            var material10 = new THREE.MeshStandardMaterial( { color: 0xFF7069, metalness: 0.5, roughness: 0.1 } );
+            var material11 = new THREE.MeshStandardMaterial( { color: 0x000000, metalness: 0.5, roughness: 0.1 } );
+            
+            
+           
+			
+			//CREAR LAS GEOMETRÍAS
+            
+            var circulo = new THREE.SphereGeometry( 10, 32, 32 );
+            var Cara = new THREE.Mesh( circulo, material9);
+            
+            var circulo8 = new THREE.SphereGeometry( 10, 32, 32 );
+            var Cara2 = new THREE.Mesh( circulo8, material9);
+            Cara2.position.x=-2;
+            
+            
+            var cono = new THREE.ConeGeometry( 4, 20, 32 );
+            var Cabello = new THREE.Mesh( cono, material4 );
+            Cabello.position.x=0;
+            Cabello.position.y=6;
+            Cabello.position.z=18;
+            Cabello.rotation.x=-5;
+            
+            
+            var cono2 = new THREE.ConeGeometry( 5, 20, 32 );
+            var Cabello2 = new THREE.Mesh( cono2, material4 );
+            //Cabello2.position.x=0;
+            Cabello2.position.y=12;
+            Cabello2.position.z=12;
+            Cabello2.rotation.x=-5.5;
+            
+            
+            var cono3 = new THREE.ConeGeometry( 4, 20, 32 );
+            var Cabello3 = new THREE.Mesh( cono2, material4 );
+            //Cabello2.position.x=0;
+            Cabello3.position.y=16;
+            /*Cabello2.position.z=12;
+            Cabello2.rotation.x=-5.5;*/
+            
+            
+            var cono4 = new THREE.ConeGeometry( 4, 20, 32 );
+            var Cabello4 = new THREE.Mesh( cono4, material4 );
+            Cabello4.position.x=0;
+            Cabello4.position.y=6;
+            Cabello4.position.z=-18;
+            Cabello4.rotation.x=5;
+            
+            
+            var cono5 = new THREE.ConeGeometry( 5, 20, 32 );
+            var Cabello5 = new THREE.Mesh( cono5, material4 );
+            //Cabello2.position.x=0;
+            Cabello5.position.y=12;
+            Cabello5.position.z=-12;
+            Cabello5.rotation.x=5.5;
+            
+            
+            
+            var circulo2 = new THREE.SphereGeometry( 2, 32, 32 );
+            var bolita = new THREE.Mesh( circulo2, material1);
+            bolita.position.x=0;
+            bolita.position.y=10;
+            bolita.position.z=29;
+            bolita.rotation.x=-5;
+     
+            
+            
+            var circulo3 = new THREE.SphereGeometry( 2, 32, 32 );
+            var bolita2 = new THREE.Mesh( circulo3, material1);
+            bolita2.position.y=21;
+            bolita2.position.z=19.5;
+            bolita2.rotation.x=-5.5;
+        
+            
+            var circulo4 = new THREE.SphereGeometry( 2, 32, 32 );
+            var bolita3 = new THREE.Mesh( circulo4, material1);
+            bolita3.position.y=25;
+            
+            
+            var circulo5 = new THREE.SphereGeometry( 2, 32, 32 );
+            var bolita4 = new THREE.Mesh( circulo5, material1);
+            bolita4.position.y=21;
+            bolita4.position.z=-19.5;
+            bolita4.rotation.x=5.5;
+            
+            
+            var circulo6 = new THREE.SphereGeometry( 2, 32, 32 );
+            var bolita5 = new THREE.Mesh( circulo6, material1);
+            bolita5.position.x=0;
+            bolita5.position.y=10;
+            bolita5.position.z=-29;
+            bolita5.rotation.x=5;
+            
+            
+            var Cilindro = new THREE.CylinderGeometry( 2, 2, 4, 34);   
+            var ojosg = new THREE.Mesh( Cilindro, material7 );
+            ojosg.position.x=10;
+            ojosg.position.y=2;
+            ojosg.position.z=2;
+            ojosg.rotateZ(Math.PI/2);
+            
+            var Cilindro2 = new THREE.CylinderGeometry( 2, 2, 4, 34);   
+            var ojosg2 = new THREE.Mesh( Cilindro2, material7 );
+            ojosg2.position.x=10;
+            ojosg2.position.y=2;
+            ojosg2.position.z=-2;
+            ojosg2.rotateZ(Math.PI/2);
+            
+            
+            var Cilindro3 = new THREE.CylinderGeometry( 1, 1, 10, 34);   
+            var ojosp = new THREE.Mesh( Cilindro3, material11 );
+            ojosp.position.x=8;
+            ojosp.position.y=2;
+            ojosp.position.z=2;
+            ojosp.rotateZ(Math.PI/2);
+            
+            var Cilindro4 = new THREE.CylinderGeometry( 1, 1, 10, 34);   
+            var ojosp2 = new THREE.Mesh( Cilindro4, material11 );
+            ojosp2.position.x=8;
+            ojosp2.position.y=2;
+            ojosp2.position.z=-2;
+            ojosp2.rotateZ(Math.PI/2);
+                       
+            
+            var circulo7 = new THREE.SphereGeometry( 1.5, 32, 32 );
+            var bolita6 = new THREE.Mesh( circulo7, material10);
+            bolita6.position.x=8;
+            bolita6.position.y=0;
+            bolita6.position.z=-4.5;
+            bolita6.rotation.x=5;
+            
+            
+            var circulo8 = new THREE.SphereGeometry( 1.5, 32, 32 );
+            var bolita7 = new THREE.Mesh( circulo8, material10);
+            bolita7.position.x=8;
+            bolita7.position.y=0;
+            bolita7.position.z=4.5;
+            bolita7.rotation.x=5;
+            
+            var Cilindro5 = new THREE.CylinderGeometry( 2.5, 2.5, 10, 34);   
+            var boca = new THREE.Mesh( Cilindro5, material5 );
+            boca.position.x=5;
+            boca.position.y=-4;
+            boca.position.z=0;
+            boca.rotateZ(Math.PI/2);
+            
+            
+	
+			//CONVERTIR A CSG
+            
+            var CaraCSG = THREE.CSG.fromMesh(Cara);
+            var Cara2CSG = THREE.CSG.fromMesh(Cara2);
+            var CabelloCSG = THREE.CSG.fromMesh( Cabello );
+            var Cabello2CSG = THREE.CSG.fromMesh( Cabello2 );
+            var Cabello3CSG = THREE.CSG.fromMesh( Cabello3 );
+            var Cabello4CSG = THREE.CSG.fromMesh( Cabello4 );
+            var Cabello5CSG = THREE.CSG.fromMesh( Cabello5 );
+            var bolitaCSG = THREE.CSG.fromMesh( bolita);
+            var bolita2CSG = THREE.CSG.fromMesh( bolita2);
+            var bolita3CSG = THREE.CSG.fromMesh( bolita3);
+            var bolita4CSG = THREE.CSG.fromMesh( bolita4);
+            var bolita5CSG = THREE.CSG.fromMesh( bolita5);
+            var bolita6CSG = THREE.CSG.fromMesh( bolita6);
+            var bolita7CSG = THREE.CSG.fromMesh( bolita7);
+            var ojosgCSG = THREE.CSG.fromMesh( ojosg );
+            var ojosg2CSG = THREE.CSG.fromMesh( ojosg2 );
+            var ojospCSG = THREE.CSG.fromMesh( ojosp );
+            var ojosp2CSG = THREE.CSG.fromMesh( ojosp2 );
+            var bocaCSG = THREE.CSG.fromMesh( boca );
+        
+            
+   
+            
+  
+			
+			//APLICAR LAS OPERACIONES
+            var result = ojosgCSG.subtract(ojospCSG);
+            var result2 = ojosg2CSG.subtract(ojosp2CSG);
+            var result3 = CaraCSG.subtract(Cara2CSG);
+            var result4 = result3.subtract(result).subtract(result2);
+            var result5 = result3.subtract(bocaCSG);
+            
+            
+            
+            
+            
+          
+          
+            
+			
+			//CONVERTIR A THREE
+            
+            ojosg = THREE.CSG.toMesh(result); 
+            ojosg2 = THREE.CSG.toMesh(result2); 
+            Cara = THREE.CSG.toMesh(result3);
+            Cara =THREE.CSG.toMesh(result4);
+            Cara =THREE.CSG.toMesh(result5);
+            ojosg.material = material7;
+            ojosg2.material = material7;
+            Cara.material = material9;
+            
+            /*RectanguloDebajoBase = THREE.CSG.toMesh( result ); 
+            RectanguloDebajoBase = THREE.CSG.toMesh( result2 );
+            CilindroDebajoDebajo = THREE.CSG.toMesh( result3 );
+            RectanguloMitadTrianguloOf = THREE.CSG.toMesh( result4 );
+            CilindroSuperiorNivel1 = THREE.CSG.toMesh( result5 );
+            CilindroSuperiorNivel1 = THREE.CSG.toMesh( result6 );
+            CilindroSuperiorNivel2 = THREE.CSG.toMesh( result7 );
+            
+            RectanguloDebajoBase.material = material2;
+            CilindroDebajoDebajo.material = material4;
+            RectanguloMitadTrianguloOf.material = material6;
+            CilindroSuperiorNivel1.material = material8;
+            CilindroSuperiorNivel2.material = material10;*/
+            
+            
+			//AGREGAR A LA ESCENA LOS DIFERENTES ELEMENTOS
+            
+            scene.add(Cara);
+            //scene.add(Cara2);
+            scene.add(Cabello);
+            scene.add(Cabello2);
+            scene.add(Cabello3);
+            scene.add(Cabello4);
+            scene.add(Cabello5);
+            scene.add(bolita);
+            scene.add(bolita2);
+            scene.add(bolita3);
+            scene.add(bolita4);
+            scene.add(bolita5);
+            scene.add(bolita6);
+            scene.add(bolita7);
+            scene.add(ojosg);
+            scene.add(ojosg2);
+            //scene.add(boca);
+            //scene.add(ojosp);
+            //scene.add(ojosp2);
+            
+            
+            
+            
+			/*scene.add(RectanguloBase);
+            scene.add(RectanguloDebajoBase);
+            scene.add(RectanguloDebajoBase2);
+            scene.add(RectanguloDebajoRelleno);
+            scene.add(RectanguloDebajoRelleno2);
+            //scene.add(CilindroDebajoLados);
+            //scene.add(CilindroDebajoLados2);
+            scene.add(CilindroDebajoDebajo);
+            //scene.add(CilindroDebajoDebajoCentro);
+            scene.add(RectanguloPared);
+            scene.add(RectanguloMitadTrianguloOf);
+            //scene.add(RectanguloMitadTriangulo2);
+            scene.add(CilindroSuperiorNivel1);
+            scene.add(CilindroSuperiorNivel2);
+            //scene.add(CilindroSuperiorNivel2Relleno);
+            //scene.add(CilindroSuperiorNivel3);
+            */
+			
+			camera.position.x = 50;
+			camera.position.y = 30;
+		  	camera.position.z = 0;
+			camera.lookAt( origin );
+		}
+		function animate(){
+			requestAnimationFrame( animate );
+			controls.update();
+			render();
+		}
+		function render(){
+			renderer.render( scene, camera );
+		}
+    </script>
+  </body>
+</html>
